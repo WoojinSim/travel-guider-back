@@ -3,6 +3,7 @@ const axios = require("axios");
 const cheerio = require("cheerio");
 const iconv = require("iconv-lite");
 const cors = require("cors");
+const chalk = require("chalk");
 
 const app = express();
 const PORT = 4000;
@@ -33,9 +34,9 @@ app.get("/API/:element", async (req, res) => {
           ...jsonDataRaw.props.pageProps.commonInfo.geoInfo,
         };
         console.log(
-          `[${hours}:${minutes}:${seconds}][` +
-            (req.ip == "::1" ? "LOCALHOST" : req.ip) +
-            `] ${element}_데이터 요청 (http://localhost:${PORT}/API/${element})`
+          chalk.blue(`[${hours}:${minutes}:${seconds}]`) +
+            chalk.green(`[${req.ip == "::1" ? "LOCALHOST" : req.ip}]`) +
+            ` ${element}_데이터 요청 (http://localhost:${PORT}/API/${element})`
         );
         res.json(jsonData);
       });
@@ -45,5 +46,9 @@ app.get("/API/:element", async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`서버가 http://localhost:${PORT} 에서 실행중 입니다.`);
+  console.log(
+    chalk.yellow(
+      `* * *\n\n서버가 http://localhost:${PORT} 에서 실행됩니다.\n\n* * *`
+    )
+  );
 });
