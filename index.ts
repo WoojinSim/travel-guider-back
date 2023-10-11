@@ -21,9 +21,8 @@ const getNow = () => {
   return returnString;
 };
 
+/* 네이버 API */
 app.get("/API/:element", async (req, res) => {
-  // TODO: 환율 정보 가져온뒤 다시 쏴주는 API 만들어야함!!!
-
   const { element } = req.params;
   if (element) {
     try {
@@ -64,6 +63,7 @@ app.get("/API/:element", async (req, res) => {
   }
 });
 
+/* 환율 API */
 app.get("/EXCHANGE", async (req, res) => {
   var DATE_STRING = "";
   const now = new Date();
