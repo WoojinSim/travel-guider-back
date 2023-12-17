@@ -57,6 +57,13 @@ app.get("/:apiType/:element", async (req, res) => {
     DATE_STRING += now.getFullYear();
     DATE_STRING += (now.getMonth() + 1).toString().padStart(2, "0");
     DATE_STRING += now.getDate().toString().padStart(2, "0");
+
+    /*
+     한국수출입은행의 현재환율 API에서 실시간 데이터를 받아와야 하지만 20231217일자 이후 날짜서부터 원인모를 문제로 데이터가 넘어오지 않음
+     임시로 20231215 날짜로 고정.
+     */
+    DATE_STRING = "20231215";
+
     try {
       await axios
         .get(
@@ -67,7 +74,7 @@ app.get("/:apiType/:element", async (req, res) => {
           console.log(
             chalk.blue(`[${getNow()}]`) +
               chalk.green(`[${req.ip == "::1" ? "LOCALHOST" : req.ip}]`) +
-              ` 환율 데이터 요청 (http://localhost:${PORT}/EXCHANGE)`
+              ` 환율 데이터 요청 (http://localhost:${PORT}/EXCHANGE) (${DATE_STRING})`
           );
         });
     } catch (e) {
